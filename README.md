@@ -170,6 +170,5 @@ Citation (example placeholder)
 
 Contact
 -------
-- Name: Your Name
-- Email: your_email@example.com
-- Notes: Replace placeholders (author, dataset, metrics, paths) with your actual project details.
+- Name: Md. Arafath Hossen Abir
+- Email: arafathabir07@gmail.com
