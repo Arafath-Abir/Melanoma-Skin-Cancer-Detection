@@ -1,131 +1,131 @@
-<!-- PROJECT TITLE -->
-<h1 align="center">Melanoma Skin Cancer Detection (Transfer Learning)</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Melanoma Skin Cancer Detection — README</title>
+<style>
+  :root {
+    --bg: #0b0f14;
+    --card: #111821;
+    --text: #e6edf3;
+    --muted: #98a2ad;
+    --accent: #7cc6ff;
+    --border: #1f2a36;
+  }
+  html, body { background: var(--bg); color: var(--text); font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif; line-height: 1.6; margin: 0; padding: 0; }
+  .wrap { max-width: 920px; margin: 40px auto; padding: 0 20px; }
+  h1, h2, h3 { line-height: 1.25; margin: 1.2em 0 0.5em; }
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.35rem; border-bottom: 1px solid var(--border); padding-bottom: .25rem; }
+  h3 { font-size: 1.05rem; color: var(--accent); }
+  p, li { color: var(--text); }
+  .muted { color: var(--muted); }
+  .badge { display: inline-block; padding: .2rem .55rem; border: 1px solid var(--border); border-radius: .5rem; margin-right: .4rem; background: var(--card); font-size: .8rem; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; margin: 18px 0; }
+  code { font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace; background: #0d1117; color: #e6edf3; border: 1px solid var(--border); border-radius: 6px; padding: .1rem .3rem; }
+  pre { background: #0d1117; border: 1px solid var(--border); border-radius: 12px; padding: 14px; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 16px; }
+  th, td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; }
+  th { background: #0f1721; }
+  .kicker { letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 600; font-size: .78rem; }
+  .list-compact li { margin-bottom: .25rem; }
+  .small { font-size: .9rem; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Melanoma Skin Cancer Detection (Transfer Learning)</h1>
+    <p class="muted">A detailed, portfolio-ready README describing goals, dataset expectations, modeling approach, evaluation, reproducibility and limitations for a dermoscopic image classification project.</p>
 
-<p align="center">
-  Detect melanoma vs. benign skin lesions from dermoscopic images using modern CNN transfer learning and visual explainability.
-  <br/>
-  <a href="https://colab.research.google.com/github/<your-username>/<your-repo>/blob/main/model_with_outputs_github.ipynb">
-    <img alt="Open in Colab" src="https://colab.research.google.com/assets/colab-badge.svg">
-  </a>
-</p>
+    <div class="card">
+      <span class="badge">Python</span>
+      <span class="badge">TensorFlow/Keras</span>
+      <span class="badge">Computer Vision</span>
+      <span class="badge">Transfer Learning</span>
+      <span class="badge">Explainable AI</span>
+    </div>
 
-<hr/>
+    <h2>1. Overview</h2>
+    <p>
+      This repository implements a deep learning pipeline to classify dermoscopic skin lesion images into benign or malignant (melanoma). It uses modern
+      convolutional neural networks via transfer learning (e.g., MobileNetV2 or InceptionV3) and includes data preprocessing, training, evaluation, and
+      explainability steps. The goal is to provide a clear, reproducible baseline that can be extended for research or portfolio demonstration.
+    </p>
 
-<!-- BADGES (optional placeholders; replace as needed) -->
-<p align="center">
-  <img alt="Python" src="https://img.shields.io/badge/Python-3.10+-blue">
-  <img alt="TensorFlow" src="https://img.shields.io/badge/TensorFlow-2.x-orange">
-  <img alt="License" src="https://img.shields.io/badge/License-MIT-green">
-</p>
+    <div class="card">
+      <h3>Project Objectives</h3>
+      <ul class="list-compact">
+        <li>Build a reliable image classifier for melanoma vs. benign lesions.</li>
+        <li>Use transfer learning to achieve strong performance on limited data.</li>
+        <li>Report transparent metrics beyond accuracy and visualize results.</li>
+        <li>Provide hooks for explainability (LIME, Grad-CAM) to inspect model focus.</li>
+        <li>Ensure clean structure and reproducible runs for reviewers and collaborators.</li>
+      </ul>
+    </div>
 
-<!-- OVERVIEW -->
-<h2>Overview</h2>
-<p>
-This repository contains a complete, reproducible pipeline for melanoma image classification. It uses
-<strong>TensorFlow/Keras</strong> with <strong>transfer learning</strong> (e.g., MobileNetV2, InceptionV3) and includes data
-preprocessing, training, evaluation, and model explainability (LIME / Grad-CAM-ready).
-</p>
-
-<ul>
-  <li><strong>Task:</strong> Binary classification — <em>Melanoma</em> vs <em>Benign</em></li>
-  <li><strong>Input:</strong> Dermoscopic RGB images, default resize <code>128×128</code></li>
-  <li><strong>Frameworks:</strong> TensorFlow/Keras, NumPy, Pandas, scikit-image, OpenCV</li>
-  <li><strong>Explainability:</strong> LIME (and hooks for Grad-CAM visualizations)</li>
-  <li><strong>Best run (placeholder):</strong> ~<strong>96%</strong> accuracy (replace with your final number)</li>
-</ul>
-
-<!-- DATASET -->
-<h2>Dataset</h2>
-<p>
-Update this section with your dataset source (e.g., ISIC Challenge/Archive) and licensing.
-</p>
-<ul>
-  <li><strong>Folder structure:</strong> Expecting a directory tree like <code>melanoma_cancer_dataset/train</code> and <code>.../val</code> (or a single folder with subfolders per class).</li>
-  <li><strong>Classes:</strong> <code>benign</code>, <code>malignant</code></li>
-  <li><strong>Split:</strong> Typical train/validation split via <code>ImageDataGenerator(validation_split=0.1)</code></li>
-</ul>
-
-<pre><code># Example
-melanoma_cancer_dataset/
+    <h2>2. Dataset</h2>
+    <p>
+      Replace this section with the dataset you actually use (for example, ISIC Archive/Challenge or a curated dermoscopic dataset). Ensure the images
+      are stored with one folder per class, or use a data loader that supports labels from file structure.
+    </p>
+    <div class="card small">
+      <h3>Expected Layout (example)</h3>
+      <pre><code>melanoma_cancer_dataset/
   train/
     benign/
     malignant/
-  val/            # optional if not using validation_split
+  val/                    # optional if not using validation_split
     benign/
     malignant/
 </code></pre>
+      <ul class="list-compact">
+        <li>Classes: <code>benign</code>, <code>malignant</code></li>
+        <li>Image shape: RGB; resized to 128×128 by default</li>
+        <li>Split: Typical 90/10 via ImageDataGenerator(validation_split=0.1)</li>
+      </ul>
+      <p class="muted">Note: If using public data, add source, license and citation here.</p>
+    </div>
 
-<p><strong>Credit:</strong> If you use public data (e.g., ISIC), add the official citation here.</p>
+    <h2>3. Methods</h2>
+    <ol>
+      <li><strong>Preprocessing:</strong> Rescaling to [0,1], resizing to a consistent input size, and optional augmentation (flip, rotation, zoom).</li>
+      <li><strong>Backbone Models:</strong> Transfer learning with MobileNetV2 or InceptionV3; a custom classification head on top.</li>
+      <li><strong>Training:</strong> Keras <code>Model.fit()</code> with appropriate loss and optimizer; early stopping and checkpointing recommended.</li>
+      <li><strong>Imbalance Handling:</strong> Class weights and targeted augmentation.</li>
+      <li><strong>Evaluation:</strong> Accuracy, precision, recall, F1-score; confusion matrix and ROC-AUC curves.</li>
+      <li><strong>Explainability:</strong> LIME for local explanations; Grad-CAM for saliency heatmaps (optional extension).</li>
+    </ol>
 
-<!-- METHOD -->
-<h2>Methodology</h2>
-<ol>
-  <li><strong>Preprocessing:</strong> Rescale to [0,1], resize to 128×128, optional augmentation.</li>
-  <li><strong>Backbones:</strong> Transfer learning with <code>MobileNetV2</code> and/or <code>InceptionV3</code>; custom classification head.</li>
-  <li><strong>Training:</strong> Keras <code>Model.fit()</code> with appropriate loss/optimizer; optional class weights to handle imbalance.</li>
-  <li><strong>Evaluation:</strong> Accuracy, Precision/Recall/F1, Confusion Matrix, ROC-AUC.</li>
-  <li><strong>Explainability:</strong> LIME (sample explanations); Grad-CAM hooks recommended for saliency heatmaps.</li>
-</ol>
-
-<!-- QUICK START -->
-<h2>Quick Start</h2>
-
-<h3>1) Environment</h3>
-<p>Create a virtual environment and install dependencies.</p>
-<pre><code>python -m venv .venv
+    <h2>4. Setup</h2>
+    <div class="card small">
+      <h3>Environment</h3>
+      <pre><code>python -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 </code></pre>
-
-<h3>2) Data</h3>
-<p>Place the dataset under the expected path (update in notebook if different).</p>
-
-<h3>3) Run the Notebook</h3>
-<ul>
-  <li><strong>Colab (recommended):</strong> Click the badge at the top and select <em>Runtime → Run all</em>.</li>
-  <li><strong>Local Jupyter:</strong></li>
-</ul>
-<pre><code>jupyter notebook
-# open notebooks/model_with_outputs_github.ipynb (or model.ipynb) and Run All
+      <h3>Project Structure (suggested)</h3>
+      <pre><code>.
+├── assets/                      # optional: saved plots (confusion matrix, ROC, Grad-CAM)
+├── checkpoints/                 # optional: trained models (gitignored)
+├── notebooks/
+│   └── model_with_outputs_github.ipynb
+├── src/                         # optional: scripts for training/inference
+├── requirements.txt
+└── README.md
 </code></pre>
+    </div>
 
-<!-- RESULTS -->
-<h2>Results</h2>
-<p>Replace the placeholders below with your final metrics and figures from the notebook.</p>
+    <h2>5. Running the Notebook</h2>
+    <ol>
+      <li>Place or point the notebook to your dataset path.</li>
+      <li>Open the notebook and run all cells to train/evaluate the model.</li>
+      <li>Export figures (confusion matrix, ROC curves) to the <code>assets/</code> folder if you plan to include them in the repository.</li>
+    </ol>
 
-<table>
-  <thead>
-    <tr>
-      <th>Metric</th>
-      <th>Value (Best Run)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td>Accuracy</td><td><strong>0.96</strong></td></tr>
-    <tr><td>Precision (Malignant)</td><td>...</td></tr>
-    <tr><td>Recall (Malignant)</td><td>...</td></tr>
-    <tr><td>F1 (Malignant)</td><td>...</td></tr>
-    <tr><td>ROC-AUC</td><td>...</td></tr>
-  </tbody>
-</table>
-
-<p>
-  <em>Confusion Matrix</em><br/>
-  <img alt="Confusion Matrix" src="assets/confusion_matrix.png" width="520"/>
-</p>
-<p>
-  <em>ROC Curve</em><br/>
-  <img alt="ROC Curve" src="assets/roc_auc.png" width="520"/>
-</p>
-<p>
-  <em>Sample Grad-CAM</em> (optional)<br/>
-  <img alt="Grad-CAM Examples" src="assets/gradcam_examples.png" width="520"/>
-</p>
-
-<!-- INFERENCE / USAGE -->
-<h2>Inference (Batch or Single Image)</h2>
-<p>Use the helper code below to load a saved model and predict on new images.</p>
-<pre><code>import numpy as np
+    <h2>6. Inference</h2>
+    <p>Load a trained model and run predictions on new images.</p>
+    <pre><code>import numpy as np
 import tensorflow as tf
 import cv2
 
@@ -140,77 +140,66 @@ def preprocess_img(path):
 model = tf.keras.models.load_model("checkpoints/best_model.h5")  # update path
 x = preprocess_img("samples/lesion_001.jpg")
 pred = model.predict(x)[0][0]  # assuming single sigmoid output
-print("Malignant probability:", float(pred))
-</code></pre>
+print("Malignant probability:", float(pred))</code></pre>
 
-<!-- REPRODUCIBILITY -->
-<h2>Reproducibility</h2>
-<ul>
-  <li>Environment pinned via <code>requirements.txt</code>.</li>
-  <li>Key hyperparameters grouped at the top of the notebook (image size, batch size, epochs, learning rate, backbone).</li>
-  <li>To export a static report:
-    <pre><code>jupyter nbconvert --to html notebooks/model_with_outputs_github.ipynb -o reports/model.html</code></pre>
-  </li>
-</ul>
+    <h2>7. Evaluation & Reporting</h2>
+    <p>
+      Report more than a single accuracy figure. Use the following table as a template and replace with your actual results
+      from the notebook.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Metric</th><th>Value (Best Run)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Accuracy</td><td>0.96</td></tr>
+        <tr><td>Precision (Malignant)</td><td>...</td></tr>
+        <tr><td>Recall (Malignant)</td><td>...</td></tr>
+        <tr><td>F1 (Malignant)</td><td>...</td></tr>
+        <tr><td>ROC-AUC</td><td>...</td></tr>
+      </tbody>
+    </table>
+    <p class="muted small">Tip: Also include per-class support and a confusion matrix for transparency.</p>
 
-<!-- PROJECT STRUCTURE -->
-<h2>Project Structure</h2>
-<pre><code>.
-├── assets/
-│   ├── confusion_matrix.png
-│   ├── roc_auc.png
-│   └── gradcam_examples.png
-├── checkpoints/                 # saved models (gitignored)
-├── notebooks/
-│   ├── model_with_outputs_github.ipynb
-│   └── model.ipynb
-├── src/                         # (optional) training/inference scripts
-├── requirements.txt
-├── README.md (this file)
-└── LICENSE
-</code></pre>
+    <h2>8. Reproducibility</h2>
+    <ul>
+      <li>Pin dependencies in <code>requirements.txt</code>.</li>
+      <li>Group hyperparameters (image size, batch size, epochs, learning rate, backbone) at the top of the notebook.</li>
+      <li>Consider deterministic seeds and note the exact TensorFlow version used.</li>
+      <li>Optionally export a static HTML report via <code>nbconvert</code> for reviewers.</li>
+    </ul>
 
-<!-- CLASS IMBALANCE -->
-<h2>Class Imbalance &amp; Evaluation</h2>
-<p>
-If your dataset is imbalanced, prefer <strong>class weights</strong> or targeted <strong>augmentation</strong>. Report per-class metrics, not just accuracy.
-</p>
+    <h2>9. Roadmap</h2>
+    <ul>
+      <li>Add Grad-CAM or Grad-CAM++ for visual saliency.</li>
+      <li>Try EfficientNet or ResNet backbones and compare.</li>
+      <li>Package an inference demo using Streamlit or FastAPI.</li>
+      <li>Stronger cross-validation and calibration checks.</li>
+    </ul>
 
-<!-- EXPLAINABILITY -->
-<h2>Explainability</h2>
-<ul>
-  <li><strong>LIME:</strong> Local explanations to show influential superpixels per prediction.</li>
-  <li><strong>Grad-CAM:</strong> Add saliency heatmaps from the final conv layers to verify that the model attends to lesion regions.</li>
-</ul>
+    <h2>10. Ethics & Limitations</h2>
+    <ul>
+      <li>This repository is a research and educational prototype, not a clinical tool.</li>
+      <li>Performance can vary with device, acquisition protocol and demographics.</li>
+      <li>Clinical decisions must be made by licensed healthcare professionals.</li>
+    </ul>
 
-<!-- ETHICS & LIMITATIONS -->
-<h2>Ethics &amp; Limitations</h2>
-<ul>
-  <li>This model is a <strong>research/educational prototype</strong> and <strong>not</strong> a medical device.</li>
-  <li>Performance may vary by imaging device, acquisition protocol, and patient demographics.</li>
-  <li>Always consult licensed clinicians for diagnosis and treatment.</li>
-</ul>
+    <h2>11. License</h2>
+    <p>Specify your preferred license (for example, MIT). Include a LICENSE file in the repository.</p>
 
-<!-- HOW TO CITE -->
-<h2>Citation</h2>
-<p>If you use this repository, please cite the dataset and this work appropriately (example placeholder):</p>
-<pre><code>@misc{melanoma-transfer-2025,
+    <h2>12. Citation</h2>
+    <pre><code>@misc{melanoma_transfer_learning_2025,
   title  = {Melanoma Skin Cancer Detection (Transfer Learning)},
   author = {Your Name},
-  year   = {2025},
-  howpublished = {\url{https://github.com/&lt;your-username&gt;/&lt;your-repo&gt;}}
+  year   = {2025}
 }</code></pre>
 
-<!-- LICENSE -->
-<h2>License</h2>
-<p>Released under the <a href="./LICENSE">MIT License</a>. See the <code>LICENSE</code> file for details.</p>
+    <h2>13. Contact</h2>
+    <p>Add your name and contact details for questions or collaboration.</p>
 
-<!-- CONTACT -->
-<h2>Contact</h2>
-<p>
-  <strong>Your Name</strong><br/>
-  Email: <a href="mailto:you@example.com">you@example.com</a> · LinkedIn/GitHub: <a href="https://github.com/&lt;your-username&gt;">@&lt;your-username&gt;</a>
-</p>
-
-<hr/>
-<p align="center"><em>Tip:</em> Replace placeholders (username, repo, metrics, dataset citation) and drop your result figures into <code>assets/</code> to make this README shine.</p>
+    <div class="card muted small">
+      <p><strong>Note:</strong> Replace placeholders (author, dataset source, metrics, paths) with your actual project details before publishing.</p>
+    </div>
+  </div>
+</body>
+</html>
