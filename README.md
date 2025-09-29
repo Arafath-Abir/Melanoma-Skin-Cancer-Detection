@@ -1,105 +1,107 @@
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>README — Melanoma Skin Cancer Detection</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height: 1.6; margin: 24px; color: #222; }
-  h1, h2, h3 { line-height: 1.25; margin: 1rem 0 .5rem; }
-  pre { background: #f6f8fa; border: 1px solid #eaecef; padding: 12px; overflow: auto; }
-  code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
-  table { border-collapse: collapse; width: 100%; margin: .5rem 0 1rem; }
-  th, td { border: 1px solid #eaecef; padding: 8px; text-align: left; }
-  ul { margin: .25rem 0 1rem; }
-  .note { color: #555; }
-</style>
-</head>
-<body>
+Melanoma Skin Cancer Detection (Transfer Learning)
+=================================================
 
-<h1>Melanoma Skin Cancer Detection (Transfer Learning)</h1>
-<p>
-A simple, reproducible deep learning pipeline to classify dermoscopic skin lesion images as benign or malignant.
-This document describes goals, data expectations, methods, setup, evaluation, and limitations in a clean, text-only format.
-</p>
+Summary
+-------
+Deep learning pipeline to classify dermoscopic skin lesion images as benign or malignant (melanoma). Uses transfer learning on pre-trained CNNs, includes preprocessing, training, evaluation, class-imbalance handling, and basic explainability. Intended for research/learning; not a medical device.
 
-<h2>1. Overview</h2>
-<ul>
-  <li><strong>Task:</strong> Binary image classification — melanoma vs benign.</li>
-  <li><strong>Approach:</strong> Transfer learning with modern CNN backbones (e.g., MobileNetV2 or InceptionV3) and a small custom classification head.</li>
-  <li><strong>Outputs:</strong> Metrics (accuracy, precision, recall, F1), confusion matrix, ROC-AUC (generated inside the notebook).</li>
-  <li><strong>Intended use:</strong> Research and learning; not a medical device.</li>
-</ul>
+Key Highlights
+--------------
+- Task: Binary image classification (melanoma vs benign).
+- Approach: Transfer learning (e.g., MobileNetV2 or InceptionV3) with a small custom classification head.
+- Data: Dermoscopic RGB images, resized to a fixed input size (default 128×128).
+- Metrics: Accuracy, precision, recall, F1; confusion matrix; ROC-AUC.
+- Explainability: LIME (optionally extendable to Grad-CAM).
+- Reproducibility: Requirements pinned; clear structure; seeds/hyperparameters noted.
 
-<h2>2. Dataset</h2>
-<p>
-Use a dermoscopic image dataset organized by class folders. Replace placeholders below with the dataset you actually use and include licensing/citation in your repository if applicable.
-</p>
-<pre><code>melanoma_cancer_dataset/
-  train/
-    benign/
-    malignant/
-  val/                 (optional if you use a validation split)
-    benign/
-    malignant/
-</code></pre>
-<ul>
-  <li><strong>Image format:</strong> RGB; resized to 128×128 by default.</li>
-  <li><strong>Splits:</strong> Typical 90/10 train/validation via an image data generator.</li>
-  <li><strong>Class names:</strong> benign, malignant.</li>
-</ul>
+Dataset (replace with your actual source and license)
+----------------------------------------------------
+Expected folder layout (example):
+- melanoma_cancer_dataset/
+  - train/
+    - benign/
+    - malignant/
+  - val/           (optional if using validation_split in your loader)
+    - benign/
+    - malignant/
 
-<h2>3. Methods</h2>
-<ol>
-  <li><strong>Preprocessing:</strong> Normalize pixel values to [0,1]; resize to a fixed input size; optional augmentation (flip, rotation, zoom).</li>
-  <li><strong>Backbone:</strong> Load a pre-trained CNN (e.g., MobileNetV2 or InceptionV3) without the top layers; freeze/unfreeze as needed.</li>
-  <li><strong>Head:</strong> Global pooling + dense layers + dropout + final sigmoid unit for binary classification.</li>
-  <li><strong>Training:</strong> Standard <code>model.fit</code> with early stopping and model checkpointing.</li>
-  <li><strong>Imbalance handling:</strong> Class weights and/or targeted augmentation.</li>
-  <li><strong>Evaluation:</strong> Accuracy, precision, recall, F1; confusion matrix; ROC-AUC.</li>
-  <li><strong>Explainability:</strong> LIME for local explanations; Grad-CAM (optional extension).</li>
-</ol>
+Notes:
+- Classes: benign, malignant
+- Image format: RGB
+- Typical split: 90/10 train/validation via an image data generator
+- Be sure to include dataset credit and license information in this repository
 
-<h2>4. Requirements</h2>
-<ul>
-  <li>Python 3.x</li>
-  <li>Core: TensorFlow (or Keras), NumPy, Pandas</li>
-  <li>Vision/Utils: OpenCV or scikit-image</li>
-  <li>Metrics/Plots: scikit-learn, matplotlib, seaborn</li>
-  <li>Optional: imbalanced-learn (class weights can also suffice), lime</li>
-</ul>
+Project Structure (suggested)
+-----------------------------
+- notebooks/
+  - model_with_outputs_github.ipynb     (main notebook, saved with outputs)
+- assets/                                (optional: saved plots such as confusion matrix, ROC, Grad-CAM)
+- checkpoints/                           (optional: trained models; usually gitignored)
+- src/                                   (optional: helper scripts)
+- requirements.txt
+- README.md or README.html
 
-<h2>5. Setup</h2>
-<p>Create a virtual environment and install dependencies from your <code>requirements.txt</code>.</p>
-<pre><code>python -m venv .venv
-# Windows: .venv\Scripts\activate
-# macOS/Linux:
-source .venv/bin/activate
-pip install -r requirements.txt
-</code></pre>
+Requirements
+------------
+- Python 3.x
+- TensorFlow (or Keras)
+- NumPy, Pandas
+- OpenCV or scikit-image
+- scikit-learn, matplotlib, seaborn
+- Optional: imbalanced-learn, lime
 
-<h2>6. Project Structure (suggested)</h2>
-<pre><code>.
-├─ notebooks/
-│  └─ model_with_outputs_github.ipynb
-├─ assets/                 (optional: save plots here)
-├─ checkpoints/            (optional: saved models; usually gitignored)
-├─ src/                    (optional: helper scripts)
-├─ requirements.txt
-└─ README.html             (this file)
-</code></pre>
+Setup
+-----
+1) Create and activate a virtual environment:
+   - Python venv:
+     python -m venv .venv
+     (Windows) .venv\Scripts\activate
+     (macOS/Linux) source .venv/bin/activate
 
-<h2>7. Running</h2>
-<ol>
-  <li>Place the dataset at the expected path or update the path in the notebook.</li>
-  <li>Open the notebook and run all cells to train and evaluate the model.</li>
-  <li>Optionally export plots to the <code>assets/</code> folder for documentation.</li>
-</ol>
+2) Install dependencies:
+   pip install -r requirements.txt
 
-<h2>8. Inference Example</h2>
-<p>Simple example for loading a saved model and predicting on a new image.</p>
-<pre><code>import numpy as np
+Configuration (typical hyperparameters)
+---------------------------------------
+- IMAGE_SIZE: 128x128
+- BATCH_SIZE: 32 or 64
+- EPOCHS: 15–30 (tune as needed)
+- BACKBONE: MobileNetV2 or InceptionV3 (pre-trained on ImageNet)
+- OPTIMIZER: Adam (initial learning rate ~1e-3 to 1e-4; use warmup/decay if desired)
+- LOSS: Binary cross-entropy
+- CLASS_WEIGHTS: Enabled when classes are imbalanced
+- CALLBACKS: EarlyStopping (monitor val_loss), ModelCheckpoint (save best)
+
+Training / Running
+------------------
+1) Ensure the dataset path in the notebook points to your dataset directory.
+2) Open notebooks/model_with_outputs_github.ipynb.
+3) Run all cells to:
+   - Load and preprocess data (rescale to [0,1], resize, augment if enabled)
+   - Build the model (backbone + custom head)
+   - Train with EarlyStopping and ModelCheckpoint
+   - Evaluate on the validation set
+   - Generate plots (training curves, confusion matrix, ROC) if desired
+
+Evaluation and Reporting
+------------------------
+Report more than a single accuracy number. Use the template below and fill with your actual results:
+
+Metric Template (Best Run):
+- Accuracy: 0.96
+- Precision (Malignant): ...
+- Recall (Malignant): ...
+- F1 (Malignant): ...
+- ROC-AUC: ...
+
+Also include:
+- Per-class support
+- Confusion matrix (values per class)
+- Any calibration or cross-validation results if performed
+
+Inference Example (update paths as needed)
+------------------------------------------
+import numpy as np
 import tensorflow as tf
 import cv2
 
@@ -111,56 +113,63 @@ def preprocess_img(path):
     img = cv2.resize(img, IMG_SIZE) / 255.0
     return np.expand_dims(img, axis=0)
 
-model = tf.keras.models.load_model("checkpoints/best_model.h5")  # update path if needed
+model = tf.keras.models.load_model("checkpoints/best_model.h5")
 x = preprocess_img("samples/lesion_001.jpg")
 pred = model.predict(x)[0][0]  # sigmoid output
 print("Malignant probability:", float(pred))
-</code></pre>
 
-<h2>9. Results Template</h2>
-<p>Replace placeholders with your actual numbers from the notebook.</p>
-<table>
-  <thead>
-    <tr><th>Metric</th><th>Value (Best Run)</th></tr>
-  </thead>
-  <tbody>
-    <tr><td>Accuracy</td><td>0.96</td></tr>
-    <tr><td>Precision (Malignant)</td><td>...</td></tr>
-    <tr><td>Recall (Malignant)</td><td>...</td></tr>
-    <tr><td>F1 (Malignant)</td><td>...</td></tr>
-    <tr><td>ROC-AUC</td><td>...</td></tr>
-  </tbody>
-</table>
-<p class="note">Also report per-class support and include a confusion matrix in your notebook.</p>
+Class Imbalance Notes
+---------------------
+- Prefer class weights in training when malignant cases are under-represented.
+- Augment minority class carefully (geometric transforms within dermoscopy norms).
+- Always report per-class metrics; accuracy alone can be misleading.
 
-<h2>10. Reproducibility</h2>
-<ul>
-  <li>Pin exact versions in <code>requirements.txt</code>.</li>
-  <li>Group key hyperparameters (image size, batch size, epochs, learning rate, backbone) in one place.</li>
-  <li>Record TensorFlow/Keras versions and random seeds.</li>
-</ul>
+Explainability
+--------------
+- LIME: Inspect local feature contributions (superpixels) for individual predictions.
+- Grad-CAM (optional): Visualize salient regions from the final conv layers.
+- Use explainability to verify that the model focuses on lesion areas rather than artifacts.
 
-<h2>11. Roadmap</h2>
-<ul>
-  <li>Add Grad-CAM/Grad-CAM++ for model interpretability.</li>
-  <li>Benchmark other backbones (EfficientNet, ResNet).</li>
-  <li>Optional demo with Streamlit or FastAPI.</li>
-  <li>Cross-validation and probability calibration.</li>
-</ul>
+Reproducibility
+---------------
+- Pin exact versions in requirements.txt.
+- Set random seeds where possible (TensorFlow, NumPy, Python).
+- Record backbone, image size, batch size, epochs, learning rate, and any schedule.
+- Save the best model checkpoints and include training/evaluation logs if practical.
 
-<h2>12. Ethics and Limitations</h2>
-<ul>
-  <li>This project is for research and education only; it is not a clinical diagnostic tool.</li>
-  <li>Performance depends on dataset quality, acquisition protocol, and population.</li>
-  <li>Clinical decisions must be made by licensed professionals.</li>
-</ul>
+Roadmap
+-------
+- Add Grad-CAM/Grad-CAM++ saliency maps.
+- Benchmark additional backbones (EfficientNet, ResNet).
+- Add probability calibration and cross-validation.
+- Package an optional demo (CLI or minimal UI) for quick inference.
 
-<h2>13. License</h2>
-<p>Specify and include your chosen license (for example, MIT) in a LICENSE file.</p>
+Troubleshooting (Notebooks on GitHub)
+-------------------------------------
+- If GitHub shows “Invalid Notebook” related to widget metadata:
+  - Re-save the notebook without widget outputs, or
+  - Remove widget metadata and keep only standard outputs, then commit again.
 
-<h2>14. Contact</h2>
-<p>Add your name and contact details for questions or collaboration.</p>
+Ethics and Limitations
+----------------------
+- For research and education only; not a clinical diagnostic tool.
+- Performance depends on dataset quality, acquisition protocols, and population.
+- Clinical decisions must be made by licensed professionals.
 
-</body>
-</html>
-```
+License
+-------
+- Specify your chosen license (for example, MIT) and include a LICENSE file.
+
+Citation (example placeholder)
+------------------------------
+@misc{melanoma_transfer_learning_2025,
+  title  = {Melanoma Skin Cancer Detection (Transfer Learning)},
+  author = {Your Name},
+  year   = {2025}
+}
+
+Contact
+-------
+- Name: Your Name
+- Email: your_email@example.com
+- Notes: Replace placeholders (author, dataset, metrics, paths) with your actual project details.
