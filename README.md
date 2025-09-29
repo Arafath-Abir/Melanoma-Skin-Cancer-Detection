@@ -1,5 +1,5 @@
-Melanoma Skin Cancer Detection — Project README
-==============================================
+Melanoma Skin Cancer Detection
+===============================
 
 Overview
 --------
@@ -134,21 +134,6 @@ Reproducibility Notes
 - Pin versions in requirements.txt.
 - Save the best model and training logs to checkpoints/.
 - For sharing static results, export the notebook to HTML using nbconvert if needed.
-
-Troubleshooting (GitHub Notebook Rendering)
--------------------------------------------
-- The notebook model_with_outputs_github.ipynb has been cleaned to avoid widget metadata errors on GitHub.
-- If you modify the notebook and see an "Invalid Notebook" error on GitHub, clear widget outputs or re-save without widget state.
-
-Ethics and Limitations
-----------------------
-- This project is for research/education only and is not a medical device.
-- Performance depends on dataset quality, acquisition protocol, and population.
-- All clinical decisions must be made by licensed healthcare professionals.
-
-License
--------
-Add a LICENSE file (for example, MIT) to specify reuse terms.
 
 Acknowledgements
 ----------------
