@@ -1,103 +1,108 @@
-Melanoma Skin Cancer Detection (Transfer Learning)
-=================================================
+Melanoma Skin Cancer Detection — Project README
+==============================================
 
-Summary
--------
-Deep learning pipeline to classify dermoscopic skin lesion images as benign or malignant (melanoma). Uses transfer learning on pre-trained CNNs, includes preprocessing, training, evaluation, class-imbalance handling, and basic explainability. Intended for research/learning; not a medical device.
+Overview
+--------
+This repository contains a complete, notebook-driven pipeline for binary classification of dermoscopic skin lesions (benign vs malignant/melanoma). The work is implemented in a single Jupyter/Colab notebook and uses transfer learning with modern CNN backbones, basic class-imbalance handling, and model explainability.
 
-Key Highlights
---------------
-- Task: Binary image classification (melanoma vs benign).
-- Approach: Transfer learning (e.g., MobileNetV2 or InceptionV3) with a small custom classification head.
-- Data: Dermoscopic RGB images, resized to a fixed input size (default 128×128).
-- Metrics: Accuracy, precision, recall, F1; confusion matrix; ROC-AUC.
-- Explainability: LIME (optionally extendable to Grad-CAM).
-- Reproducibility: Requirements pinned; clear structure; seeds/hyperparameters noted.
+What’s Inside
+-------------
+- Notebook-first workflow (tested in Google Colab with Google Drive mounted).
+- Directory-based image loading via Keras ImageDataGenerator.
+- Transfer Learning backbones referenced in the notebook: MobileNetV2 and InceptionV3 (with a custom classification head).
+- Evaluation utilities for confusion matrix and classification report.
+- Explainability with LIME (sample, extendable to Grad-CAM).
+- Multiple runs recorded in the notebook; observed accuracies around 0.84–0.96 depending on split and backbone.
 
-Dataset (replace with your actual source and license)
-----------------------------------------------------
-Expected folder layout (example):
-- melanoma_cancer_dataset/
+Repository Layout (suggested)
+-----------------------------
+- notebooks/
+  - model_with_outputs_github.ipynb   # cleaned, GitHub-renderable (use this on GitHub)
+  - model.ipynb                       # original notebook (may contain widget metadata)
+- melanoma_cancer_dataset/            # your dataset root (not tracked in git)
   - train/
     - benign/
     - malignant/
-  - val/           (optional if using validation_split in your loader)
+  - val/                              # optional if using validation_split
     - benign/
     - malignant/
-
-Notes:
-- Classes: benign, malignant
-- Image format: RGB
-- Typical split: 90/10 train/validation via an image data generator
-- Be sure to include dataset credit and license information in this repository
-
-Project Structure (suggested)
------------------------------
-- notebooks/
-  - model_with_outputs_github.ipynb     (main notebook, saved with outputs)
-- assets/                                (optional: saved plots such as confusion matrix, ROC, Grad-CAM)
-- checkpoints/                           (optional: trained models; usually gitignored)
-- src/                                   (optional: helper scripts)
+- assets/                             # optional: export plots here (confusion matrix, ROC, etc.)
+- checkpoints/                        # optional: saved models (add to .gitignore)
 - requirements.txt
-- README.md or README.html
+- README.md
 
-Requirements
-------------
-- Python 3.x
-- TensorFlow (or Keras)
-- NumPy, Pandas
-- OpenCV or scikit-image
-- scikit-learn, matplotlib, seaborn
-- Optional: imbalanced-learn, lime
+Dataset Expectations
+--------------------
+- Input: RGB dermoscopic images.
+- Target size: 128x128 (resized in the loader).
+- Normalization: rescale to [0, 1] via ImageDataGenerator (rescale=1/255).
+- Split: typical 90/10 using validation_split=0.1, or an explicit val/ directory.
+- Loading: flow_from_directory with batch_size=64, shuffle=True, color_mode='rgb'.
+- Classes: two folders named "benign" and "malignant".
 
-Setup
------
-1) Create and activate a virtual environment:
-   - Python venv:
-     python -m venv .venv
-     (Windows) .venv\Scripts\activate
-     (macOS/Linux) source .venv/bin/activate
+Environment and Requirements
+----------------------------
+Python 3.x with the following libraries (adjust versions as needed):
+- tensorflow / keras
+- numpy, pandas
+- matplotlib, seaborn
+- scikit-learn
+- opencv-python (cv2) and/or scikit-image
+- imbalanced-learn (optional, for class imbalance strategies)
+- lime (for explainability)
 
-2) Install dependencies:
+Example requirements.txt
+------------------------
+tensorflow
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+opencv-python
+scikit-image
+imbalanced-learn
+lime
+
+Quick Start
+-----------
+1) Create a virtual environment and install dependencies:
+   python -m venv .venv
+   (Windows) .venv\Scripts\activate
+   (macOS/Linux) source .venv/bin/activate
    pip install -r requirements.txt
 
-Configuration (typical hyperparameters)
----------------------------------------
-- IMAGE_SIZE: 128x128
-- BATCH_SIZE: 32 or 64
-- EPOCHS: 15–30 (tune as needed)
-- BACKBONE: MobileNetV2 or InceptionV3 (pre-trained on ImageNet)
-- OPTIMIZER: Adam (initial learning rate ~1e-3 to 1e-4; use warmup/decay if desired)
-- LOSS: Binary cross-entropy
-- CLASS_WEIGHTS: Enabled when classes are imbalanced
-- CALLBACKS: EarlyStopping (monitor val_loss), ModelCheckpoint (save best)
+2) Place your dataset under melanoma_cancer_dataset/ following the structure above.
 
-Training / Running
-------------------
-1) Ensure the dataset path in the notebook points to your dataset directory.
-2) Open notebooks/model_with_outputs_github.ipynb.
-3) Run all cells to:
-   - Load and preprocess data (rescale to [0,1], resize, augment if enabled)
-   - Build the model (backbone + custom head)
-   - Train with EarlyStopping and ModelCheckpoint
-   - Evaluate on the validation set
-   - Generate plots (training curves, confusion matrix, ROC) if desired
+3) Open the notebook:
+   - notebooks/model_with_outputs_github.ipynb  (recommended for GitHub viewing)
+   - or notebooks/model.ipynb
 
-Evaluation and Reporting
-------------------------
-Report more than a single accuracy number. Use the template below and fill with your actual results:
+4) In the notebook:
+   - Update the dataset path if needed.
+   - Run all cells to:
+     • prepare generators (train/validation)
+     • build the model (MobileNetV2 or InceptionV3 base + custom head)
+     • train with early stopping/checkpointing (if enabled)
+     • evaluate and print metrics
+     • generate plots (learning curves, confusion matrix, ROC) if desired
+     • run LIME explanations on a few samples (optional)
 
-Metric Template (Best Run):
-- Accuracy: 0.96
-- Precision (Malignant): ...
-- Recall (Malignant): ...
-- F1 (Malignant): ...
-- ROC-AUC: ...
+Training Configuration (as used in the notebook)
+------------------------------------------------
+- Image size: 128x128, RGB
+- Batch size: 64
+- Validation split: 0.1 (via ImageDataGenerator)
+- Optimizer/Loss: Keras standard setup for binary classification
+- Class imbalance: augmentation and/or class weights (imbalanced-learn available)
+- Backbones: MobileNetV2 and InceptionV3 (transfer learning, custom top layers)
 
-Also include:
-- Per-class support
-- Confusion matrix (values per class)
-- Any calibration or cross-validation results if performed
+Evaluation
+----------
+- Metrics: accuracy, precision, recall, F1-score (per class via classification_report)
+- Confusion matrix: printed/drawn in the notebook
+- ROC-AUC: optional, can be added alongside probability outputs
+- Observed accuracy (notebook runs): ~0.84, ~0.93, up to ~0.96 depending on configuration and split
 
 Inference Example (update paths as needed)
 ------------------------------------------
@@ -113,62 +118,39 @@ def preprocess_img(path):
     img = cv2.resize(img, IMG_SIZE) / 255.0
     return np.expand_dims(img, axis=0)
 
-model = tf.keras.models.load_model("checkpoints/best_model.h5")
+model = tf.keras.models.load_model("checkpoints/best_model.h5")  # adjust path if different
 x = preprocess_img("samples/lesion_001.jpg")
-pred = model.predict(x)[0][0]  # sigmoid output
+pred = model.predict(x)[0][0]  # sigmoid output for binary classification
 print("Malignant probability:", float(pred))
-
-Class Imbalance Notes
----------------------
-- Prefer class weights in training when malignant cases are under-represented.
-- Augment minority class carefully (geometric transforms within dermoscopy norms).
-- Always report per-class metrics; accuracy alone can be misleading.
 
 Explainability
 --------------
-- LIME: Inspect local feature contributions (superpixels) for individual predictions.
-- Grad-CAM (optional): Visualize salient regions from the final conv layers.
-- Use explainability to verify that the model focuses on lesion areas rather than artifacts.
+- LIME: used in the notebook to provide local explanations for individual predictions.
+- Grad-CAM (optional): recommended to visualize salient regions learned by the CNN and confirm focus on lesion areas.
 
-Reproducibility
----------------
-- Pin exact versions in requirements.txt.
-- Set random seeds where possible (TensorFlow, NumPy, Python).
-- Record backbone, image size, batch size, epochs, learning rate, and any schedule.
-- Save the best model checkpoints and include training/evaluation logs if practical.
+Reproducibility Notes
+---------------------
+- Keep hyperparameters (image size, batch, epochs, learning rate, backbone) grouped near the top of the notebook.
+- Pin versions in requirements.txt.
+- Save the best model and training logs to checkpoints/.
+- For sharing static results, export the notebook to HTML using nbconvert if needed.
 
-Roadmap
--------
-- Add Grad-CAM/Grad-CAM++ saliency maps.
-- Benchmark additional backbones (EfficientNet, ResNet).
-- Add probability calibration and cross-validation.
-- Package an optional demo (CLI or minimal UI) for quick inference.
-
-Troubleshooting (Notebooks on GitHub)
--------------------------------------
-- If GitHub shows “Invalid Notebook” related to widget metadata:
-  - Re-save the notebook without widget outputs, or
-  - Remove widget metadata and keep only standard outputs, then commit again.
+Troubleshooting (GitHub Notebook Rendering)
+-------------------------------------------
+- The notebook model_with_outputs_github.ipynb has been cleaned to avoid widget metadata errors on GitHub.
+- If you modify the notebook and see an "Invalid Notebook" error on GitHub, clear widget outputs or re-save without widget state.
 
 Ethics and Limitations
 ----------------------
-- For research and education only; not a clinical diagnostic tool.
-- Performance depends on dataset quality, acquisition protocols, and population.
-- Clinical decisions must be made by licensed professionals.
+- This project is for research/education only and is not a medical device.
+- Performance depends on dataset quality, acquisition protocol, and population.
+- All clinical decisions must be made by licensed healthcare professionals.
 
 License
 -------
-- Specify your chosen license (for example, MIT) and include a LICENSE file.
+Add a LICENSE file (for example, MIT) to specify reuse terms.
 
-Citation (example placeholder)
-------------------------------
-@misc{melanoma_transfer_learning_2025,
-  title  = {Melanoma Skin Cancer Detection (Transfer Learning)},
-  author = {Your Name},
-  year   = {2025}
-}
-
-Contact
--------
-- Name: Md. Arafath Hossen Abir
-- Email: arafathabir07@gmail.com
+Acknowledgements
+----------------
+- TensorFlow/Keras community and documentation.
+- Public melanoma datasets and their contributors (add your dataset source and citation here).
